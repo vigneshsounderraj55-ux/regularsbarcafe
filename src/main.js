@@ -43,16 +43,17 @@ function initPreloader() {
    SMOOTH SCROLL (Lenis)
    ============================================ */
 function initLenis() {
-  if (prefersReduced) return null;
-  const lenis = new Lenis({
+  const lenis = prefersReduced ? null : new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
   });
 
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
+  if (lenis) {
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
 
   // Anchor links
   document.querySelectorAll('[data-link]').forEach((link) => {
@@ -62,7 +63,11 @@ function initLenis() {
         e.preventDefault();
         const target = document.querySelector(href);
         if (target) {
-          lenis.scrollTo(target, { offset: -60, duration: 1.5 });
+          if (lenis) {
+            lenis.scrollTo(target, { offset: -60, duration: 1.5 });
+          } else {
+            target.scrollIntoView({ behavior: 'auto' });
+          }
           closeMobileMenu();
         }
       }
@@ -123,6 +128,8 @@ function initNav() {
   function openMobileMenu() {
     mobileMenu.classList.add('is-open');
     burger.classList.add('is-open');
+    burger.setAttribute('aria-label', 'Close menu');
+    burger.setAttribute('aria-expanded', 'true');
     mobileMenu.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
@@ -130,6 +137,8 @@ function initNav() {
   function closeMobileMenu() {
     mobileMenu.classList.remove('is-open');
     burger.classList.remove('is-open');
+    burger.setAttribute('aria-label', 'Open menu');
+    burger.setAttribute('aria-expanded', 'false');
     mobileMenu.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
@@ -241,10 +250,8 @@ function initHeroIntro() {
   }
 
   const tl = gsap.timeline({ delay: 0.2 });
-  tl.fromTo('.hero__eyebrow', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
-    .fromTo('.hero__line .reveal-y', { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: 'power4.out' }, '-=0.4')
-    .fromTo('.hero__desc', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5')
-    .fromTo('.hero__actions', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.6')
+  tl.fromTo('.hero__desc', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+    .fromTo('.hero__actions', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
     .from('.hero__scroll', { opacity: 0, duration: 1, ease: 'power2.out' }, '-=0.3');
 }
 

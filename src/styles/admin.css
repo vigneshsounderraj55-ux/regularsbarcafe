@@ -174,7 +174,7 @@ body {
 /* Dashboard */
 .dashboard {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 260px minmax(0, 1fr);
   min-height: 100vh;
 }
 
@@ -186,6 +186,8 @@ body {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100svh;
+  overflow-y: auto;
 }
 
 .dashboard__brand-main {
@@ -248,6 +250,7 @@ body {
 
 .dashboard__main {
   padding: 2.5rem 3rem;
+  min-width: 0;
   overflow-x: hidden;
 }
 
@@ -289,11 +292,13 @@ body {
 .dashboard__table {
   background: var(--cream);
   border: 1px solid var(--border);
+  overflow-x: auto;
 }
 
 .table-row {
   display: grid;
   grid-template-columns: 60px 1fr 1fr 100px 100px 140px;
+  min-width: 820px;
   gap: 1rem;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
@@ -422,6 +427,7 @@ body {
 /* Contact form */
 .contact-form {
   max-width: 700px;
+  width: 100%;
   background: var(--cream);
   padding: 2rem;
   border: 1px solid var(--border);
@@ -482,16 +488,58 @@ body {
 
 .modal-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.8rem;
   margin-top: 1.5rem;
 }
 
+@media (max-width: 1000px) {
+  .dashboard__main { padding: 1.5rem; }
+}
+
 @media (max-width: 768px) {
   .dashboard { grid-template-columns: 1fr; }
-  .dashboard__sidebar { position: relative; height: auto; flex-direction: row; flex-wrap: wrap; }
-  .dashboard__nav { flex-direction: row; flex-wrap: wrap; }
-  .dashboard__main { padding: 1.5rem; }
-  .table-row { grid-template-columns: 50px 1fr auto; }
+  .dashboard__sidebar {
+    position: relative;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+  }
+  .dashboard__brand-sub { margin-bottom: 0; }
+  .dashboard__nav {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.3rem;
+  }
+  .dashboard__nav-btn {
+    min-width: 0;
+    padding: 0.75rem;
+    text-align: center;
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+  }
+  .dashboard__nav-btn.is-active {
+    border-left-color: transparent;
+    border-bottom-color: var(--gold);
+  }
+  .dashboard__logout { grid-column: 2; grid-row: 1; text-align: right; }
+  .dashboard__header { flex-wrap: wrap; gap: 1rem; }
+  .dashboard__header h1 { font-size: clamp(1.5rem, 6vw, 1.8rem); }
+  .table-row { grid-template-columns: 50px minmax(0, 1fr) auto; min-width: 0; }
   .table-row__desc, .table-row__price, .table-row--head { display: none; }
   .form-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 420px) {
+  .dashboard__main { padding: 1rem; }
+  .dashboard__sidebar { padding: 1.5rem 1rem; }
+  .table-row { gap: 0.65rem; padding: 0.75rem; }
+  .table-row__actions { flex-wrap: wrap; justify-content: flex-end; }
+  .btn-admin--small { padding: 0.45rem 0.6rem; }
+  .contact-form { padding: 1.25rem; }
+  .modal-overlay { padding: 0.75rem; }
+  .modal { padding: 1.5rem; }
 }
