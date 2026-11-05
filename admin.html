@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · Regulars Coffee Bar</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23211713'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='52' fill='%23C5A46D' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./src/styles/admin.css" />
+</head>
+<body>
+  <!-- Login -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="login-brand">
+        <span class="login-brand__main">REGULARS</span>
+        <span class="login-brand__sub">COFFEE BAR · ADMIN</span>
+      </div>
+      <form id="loginForm" class="login-form">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" required autocomplete="email" placeholder="admin@regularscoffeebar.com" />
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required autocomplete="current-password" placeholder="••••••••" />
+        </div>
+        <button type="submit" class="btn-admin btn-admin--primary" id="loginBtn">Sign In</button>
+        <p class="login-error" id="loginError"></p>
+      </form>
+      <a href="./" class="login-back">← Back to website</a>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="dashboard" style="display:none;">
+    <aside class="dashboard__sidebar">
+      <div class="dashboard__brand">
+        <span class="dashboard__brand-main">REGULARS</span>
+        <span class="dashboard__brand-sub">ADMIN</span>
+      </div>
+      <nav class="dashboard__nav">
+        <button class="dashboard__nav-btn is-active" data-panel="menu">Menu Items</button>
+        <button class="dashboard__nav-btn" data-panel="gallery">Gallery</button>
+        <button class="dashboard__nav-btn" data-panel="reviews">Reviews</button>
+        <button class="dashboard__nav-btn" data-panel="contact">Contact & Hours</button>
+      </nav>
+      <button class="dashboard__logout" id="logoutBtn">Sign Out</button>
+    </aside>
+
+    <main class="dashboard__main">
+      <header class="dashboard__header">
+        <h1 id="panelTitle">Menu Items</h1>
+        <a href="./" target="_blank" class="dashboard__view">View site ↗</a>
+      </header>
+
+      <!-- Menu Panel -->
+      <section id="panel-menu" class="dashboard__panel is-active">
+        <div class="dashboard__toolbar">
+          <button class="btn-admin btn-admin--primary" id="addMenuItem">+ Add Menu Item</button>
+        </div>
+        <div class="dashboard__table" id="menuTable"></div>
+      </section>
+
+      <!-- Gallery Panel -->
+      <section id="panel-gallery" class="dashboard__panel">
+        <div class="dashboard__toolbar">
+          <button class="btn-admin btn-admin--primary" id="addGalleryImage">+ Add Gallery Image</button>
+        </div>
+        <div class="gallery-admin" id="galleryAdmin"></div>
+      </section>
+
+      <!-- Reviews Panel -->
+      <section id="panel-reviews" class="dashboard__panel">
+        <div class="dashboard__toolbar">
+          <button class="btn-admin btn-admin--primary" id="addReview">+ Add Review</button>
+        </div>
+        <div class="reviews-admin" id="reviewsAdmin"></div>
+      </section>
+
+      <!-- Contact Panel -->
+      <section id="panel-contact" class="dashboard__panel">
+        <form id="contactForm" class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Address Line 1</label>
+              <input type="text" id="contactAddr1" />
+            </div>
+            <div class="form-group">
+              <label>Address Line 2</label>
+              <input type="text" id="contactAddr2" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Address Line 3</label>
+              <input type="text" id="contactAddr3" />
+            </div>
+            <div class="form-group">
+              <label>Phone (optional)</label>
+              <input type="text" id="contactPhone" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Instagram URL</label>
+              <input type="text" id="contactInstagram" />
+            </div>
+            <div class="form-group">
+              <label>Google Maps Query</label>
+              <input type="text" id="contactMaps" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Opening Hours Line 1</label>
+              <input type="text" id="contactHours1" />
+            </div>
+            <div class="form-group">
+              <label>Opening Hours Line 2 (optional)</label>
+              <input type="text" id="contactHours2" />
+            </div>
+          </div>
+          <button type="submit" class="btn-admin btn-admin--primary" id="saveContact">Save Contact Info</button>
+          <p class="form-success" id="contactSuccess"></p>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal__close" id="modalClose">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/admin.js"></script>
+</body>
+</html>
